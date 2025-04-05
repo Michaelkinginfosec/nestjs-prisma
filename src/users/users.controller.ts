@@ -3,7 +3,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto} from './dto/CreateUser.dto';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { UpdateUserSettingsDto } from './dto/UpdateUserSettings.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -11,6 +13,8 @@ export class UsersController {
 
 
   @Post()
+  @ApiOperation({ summary: 'Create a new user' })
+  @ApiResponse({ status: 201, description: 'User created successfully.' })
   @UsePipes(ValidationPipe)
   createUser(@Body() createUserDto: CreateUserDto){
     return this.usersService.createUsers(createUserDto)
